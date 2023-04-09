@@ -4,11 +4,19 @@ import java.util.Scanner
 
 fun main(args: Array<String>) {
     if (args.isNotEmpty()) {
-        when (args[0] == "-dataType") {
+        if (args[0] == "-dataType") {
+            when {
             (args[1] == "long") -> long()
             (args[1] == "line") -> line()
-            (args[1] == "word") -> word()
+            (args[1] == "word") -> if (args.size < 3) {
+                word()
+            } else if (args[2] == "-sortIntegers") {
+                wordsSorted()
+            }
             else -> word()
+            }
+        } else if (args[0] == "-sortIntegers") {
+            sortIntegers()
         }
     } else word()
 }
@@ -70,4 +78,30 @@ fun word() {
     }
     println("Total words: ${wordsOnly.size}.")
     println("The longest word: $longestWord ($longestWordOccur time(s), ${((longestWordOccur.toDouble()/wordsOnly.size.toDouble()) * 100).toInt()}%).")
+}
+
+fun sortIntegers() {
+    val scanner = Scanner(System.`in`)
+    val numbersOnly = mutableListOf<Int>()
+    while (scanner.hasNext()) {
+        numbersOnly.add(scanner.nextInt())
+    }
+    println("Total numbers: ${numbersOnly.size}.")
+    print("Sorted data:")
+    for (i in numbersOnly.sorted()) {
+        print(" $i")
+    }
+}
+
+fun wordsSorted() {
+    val scanner = Scanner(System.`in`)
+    val wordsOnly = mutableListOf<Int>()
+    while (scanner.hasNext()) {
+        wordsOnly.add(scanner.nextInt())
+    }
+    println("Total numbers: ${wordsOnly.size}.")
+    print("Sorted data:")
+    for (i in wordsOnly.sorted()) {
+        print(" $i")
+    }
 }
